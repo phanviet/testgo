@@ -1,7 +1,7 @@
 package backend
 
 type Buffer struct {
-    data []rune
+    data string
 }
 
 func (b *Buffer) Size() int {
@@ -10,6 +10,6 @@ func (b *Buffer) Size() int {
 
 func (buf *Buffer) Substr(r Region) string {
     l := len(buf.data)
-    a, b := clamp(0, 1, r.Begin()), clamp(0, 1, r.End())
+    a, b := clamp(0, l, r.Begin()), clamp(0, l, r.End())
     return string(buf.data[a:b])
 }

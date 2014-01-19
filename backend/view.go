@@ -3,7 +3,7 @@ package backend
 type View struct {
     HasSettings
     filename string
-    window *window
+    window *Window
     buffer *Buffer
 }
 

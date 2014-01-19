@@ -14,7 +14,7 @@ func (s *HasSettings) Settings() *Settings {
 type OnChangeCallback func()
 type settingsMap map[string]interface {}
 type Settings struct {
-    OnChangeCallbacks map[string]OnChangeCallback
+    onChangeCallbacks map[string]OnChangeCallback
     data settingsMap
 }
 
@@ -23,11 +23,11 @@ func NewSettings() Settings {
 }
 
 func (s *Settings) AddOnChange(key string, cb OnChangeCallback) {
-    s.OnChangeCallbacks[key] = cb
+    s.onChangeCallbacks[key] = cb
 }
 
 func (s *Settings) ClearOnChange(key string) {
-    s.OnChangeCallbacks[key] = nil
+    s.onChangeCallbacks[key] = nil
 }
 
 func (s *Settings) Get(name string, def ...interface{}) interface{} {
@@ -43,7 +43,7 @@ func (s *Settings) Set(name string, val interface{}) {
 }
 
 func (s *Settings) onChange() {
-    for _, v := range s.OnChangeCallbacks {
+    for _, v := range s.onChangeCallbacks {
         v()
     }
 }
@@ -52,7 +52,7 @@ func (s *Settings) Erase(name string) {
     s.data[name] = nil
 }
 
-func (s *Settings) merge(other SettingsMap) {
+func (s *Settings) merge(other settingsMap) {
     for k, v := range other {
         s.data[k] = v
     }
